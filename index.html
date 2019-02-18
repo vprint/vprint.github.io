@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Archaeolidar</title>
+	
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+	<link rel="stylesheet" href="src/css/bootstrap.css"/>
+	<link rel="stylesheet" href="src/leaflet.css"/>
+	<link rel="stylesheet" href="src/css/archaeolidar.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" href="src/plugins/leaflet-locatecontrol-gh-pages/dist/L.Control.Locate.min.css" />
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.css" rel='stylesheet'/>
+	<link rel="stylesheet" href="src/plugins/leaflet-measure-master/leaflet-measure.css">
+	
+	<!-- Load Leaflet from CDN -->
+	<script src="src/leaflet.js"></script>
+	<script src="src/plugins/leaflet-locatecontrol-gh-pages/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+	<!-- Load Esri Leaflet from CDN (usefull to display free satellites tiles -->
+	<script src="src/plugins/esri-leaflet-v2.2.3/dist/esri-leaflet.js"></script>
+	<script src="src/plugins/leaflet-hash-master/leaflet-hash.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.js"></script>
+	<script src="src/jquery-3.3.1.min.js"></script>
+	<script src="src/plugins/Leaflet.NonTiledLayer/NonTiledLayer.js"></script>
+	<script src="src/plugins/sidebar-v2-master/js/leaflet-sidebar.js"></script>
+	
+<style>
+	body {
+		padding: 0;
+		margin: 0;
+	}
+	
+	html, body, #map {
+		height: 100%;
+	}	
+	.lorem {
+		font-family: "Garamond";
+		text-align: justify;
+	}
+	.ipsum {
+		font-style: italic;
+		color: #AAA;
+		font-size:100%;
+		text-align:center;
+	}
+	.notroundedImage{
+		overflow:hidden;
+		-webkit-border-radius:50px;
+		-moz-border-radius:50px;
+		border-radius:50px;
+	}
+
+	
+</style>
+</head>
+
+<body>
+	<div id="sidebar" class="sidebar collapsed">
+	<!--Nav tabs-->
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fas fa-bars"></i></a></li>
+				<li><a href="#settings" role="tab"><i class="fas fa-layer-group"></i></i></a></li>
+				<li><a href="#Information" role="tab"><i class="fas fa-info-circle"></i></a></li>
+            </ul>
+        </div>
+
+	<!--Tab panes-->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    Archaeolidar.net
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+                <p class="lorem"><br />The Cambodian Archaeological Lidar Initiative is the latest instalment in a tradition of archaeological mapping in Cambodia dating back nearly a century and a half to the first French expeditions. The lineage of the current project can be traced directly back to the successful nomination of Angkor as a World Heritage Site in 1992, which involved archaeologists including Christophe Pottier of the École française d’Extrême-Orient (EFEO) preparing landscape-scale maps of the urban fabric of Angkor that stretched between and far beyond the temples. Even though the cities were made of wood, traces could still clearly be seen in the topography of the landscape, in the form of ponds, occupation mounds, canals, reservoirs, roadways, neighbourhood temples, and even field patterns that had persisted intact on the surface for a millennium or more.<br/><br/><img src="img/Figure_4.jpg" height="95%" width="95%">
+				<p class="ipsum">Patterned topography including ponds in the vicinity of Banteay Samre temple</p><p class="lorem">During the 1990s Christophe Pottier completed a very detailed topographic map of the central and southern areas of Greater Angkor, and from 1998 joined Roland Fletcher of the University of Sydney and colleagues from the APSARA National Authority in creating the Greater Angkor Project (GAP). One of the core objectives of GAP was to map the extended urban landscape of Angkor in order to evaluate various theories about the decline of Angkor as the centre of gravity of Khmer power in the 14th to 15th centuries, in particular the role of the water management system in the failure of the urban network. This required a detailed understanding of the archaeological landscape over a very wide scale of time and space, and during the 1990s various remote sensing projects – focusing in particular on radar imaging technology – were launched with a view to further elaborating Christophe Pottier’s map in the extended northern, eastern and southern reaches of the Greater Angkor Area. The most fruitful of these projects was a radar acquisition conducted in 2000 by NASA for GAP over an extended area from the Tonle Sap to the Phnom Kulen range, which formed the basis for many years of ongoing mapping work and culminated in the publication of a new map of Angkor in 2007 incorporating the work of Christophe Pottier and Damian Evans, who combined the radar and various other image sources to extend and complete a map of Greater Angkor. Meanwhile, members of GAP and other teams lunched similar mapping projects at regional centres of the Khmer such as Banteay Chhmar and Koh Ker.<br /><img src="img/Figure_1.jpg" height="95%" width="95%"><p class="ipsum">Map of Greater Angkor published in 2007 based on the PhD theses of Christophe Pottier (1999) and Damian Evans (2007)<p class="lorem">The greatest deficiency of all of these maps was the inability of conventional sensors, including radar, to ‘see through’ the dense vegetation that often covered the zones of archaeological interest. Airborne laser scanning or ‘lidar’ technology had been on our horizon for many years as a potential solution to this problem, but the technology was expensive, and until recently was not sufficiently advanced for our purposes. Inspired by the high-profile success of lidar at the Mayan site of Caracol in Belize in 2009, members of GAP used seed money from the National Geographic to grow a consortium of eight international teams (the Khmer Archaeology LiDAR Consortium or KALC) in order to carry out the first application of lidar for archaeology anywhere in Asia. This was completed over Angkor, Phnom Kulen and Koh Ker in 2012, and the successful results of that mission were the basis for an award by the European Research Council of 1.5 million Euros to the EFEO for a second, greatly-expanded lidar campaign in 2015.</p>
+            </div>
+            
+			<div class="sidebar-pane" id="settings">
+                <h1 class="sidebar-header">
+				Settings
+				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+		
+		<br /><table><tr><td width=15%><img src="img\net\DEM.png" id="pic1" onclick="change1()" width=60px height=60px</td><td width=5%></td><td width=80%><p class="lorem">Elevation</p>
+            <input type='range' id='sldOpacity1' min='0' max='1' step='0.001' value='1'></td></tr></table>
+		
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Hillshade.png" id="pic2" onclick="change2()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Hillshade</p>
+            <input type='range' id='sldOpacity2' min='0' max='1' step='0.001' value='1'></td></tr></table>
+			
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Slope.png" id="pic3" onclick="change3()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Slope</p>
+            <input type='range' id='sldOpacity3' min='0' max='1' step='0.001' value='1'></td></tr></table>
+			
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\SVF.png" id="pic4" onclick="change4()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Sky-View Factor</p>
+            <input type='range' id='sldOpacity4' min='0' max='1' step='0.001' value='1'></td></tr></table>
+		
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\LRM.png" id="pic5" onclick="change5()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Local Relief Model</p>
+            <input type='range' id='sldOpacity5' min='0' max='1' step='0.001' value='1'></td></tr></table>
+			
+            </div>
+			
+			<div class="sidebar-pane" id="Information">
+                <h1 class="sidebar-header">Information
+				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				
+		<br /><table><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_CanalWater0.png" /></td><td style="text-align: center;">Canal (Water)</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Causeway1.png" /></td><td style="text-align: center;">Causeway</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Embankment2.png" /></td><td style="text-align: center;">Embankment</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_MasonryCut3.png" /></td><td style="text-align: center;">Masonry (Cut)</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Moat4.png" /></td><td style="text-align: center;">Moat</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Mound5.png" /></td><td style="text-align: center;">Mound</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_NotYetAssigned6.png" /></td><td style="text-align: center;">Not Yet Assigned</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Pond7.png" /></td><td style="text-align: center;">Pond</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_PondBanks8.png" /></td><td style="text-align: center;">Pond Banks</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_SignificantMound9.png" /></td><td style="text-align: center;">Significant Mound</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Temple10.png" /></td><td style="text-align: center;">Temple</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Unknown11.png" /></td><td style="text-align: center;">Unknown</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Watercourse12.png" /></td><td style="text-align: center;">Watercourse</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Quarry13.png" /></td><td style="text-align: center;">Quarry</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_CircularSite14.png" /></td><td style="text-align: center;">Circular Site</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_EarthernPlatform15.png" /></td><td style="text-align: center;">Earthern Platform</td></tr><tr><td style="text-align: center;"><img src="legend/PreahKhan_polygone_0_Flooded16.png" /></td><td style="text-align: center;">Flooded</td></tr></table>
+            </div>
+        </div>
+    </div>
+	
+	<!--Needed to display the map-->
+	<div id="map" class="sidebar-map"></div>
+	
+	<script src="src\plugins\mapbox-gl-leaflet-master\leaflet-mapbox-gl.js"></script>
+	<script src="http://ljagis.github.io/leaflet-measure/leaflet-measure.js"></script>
+	
+<script type="text/javascript">
+	<!-- Creation of the map -->
+	
+	$(document).ready(function(){
+	
+	var map = L.map('map',{zoomControl: false, minZoom:5, maxZoom: 19, inertiaDeceleration: 2000, wheelPxPerZoomLevel: 80, zoomDelta: 1, crs: L.CRS.EPSG3857}).setView([13.441288, 103.859064], 14);
+
+	var hash = new L.Hash(map);
+	
+	<!--backgrounds layers (i.e Esri Imagery and Esri Streets)-->
+	var streets = L.mapboxGL({
+		attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+		accessToken: 'pk.eyJ1IjoidnByaW50OTIiLCJhIjoiY2pnZDVoYXMyMDBpMjMzcWdxNmJkajYydSJ9.CWVQEeqtv8yTNAClH-63cw',
+		style: 'mapbox://styles/mapbox/streets-v9'
+	});
+
+	var retro = L.mapboxGL({
+		attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+		accessToken: 'pk.eyJ1IjoidnByaW50OTIiLCJhIjoiY2pnZDVoYXMyMDBpMjMzcWdxNmJkajYydSJ9.CWVQEeqtv8yTNAClH-63cw',
+		style: 'mapbox://styles/mapbox/emerald-v8'
+	});
+	
+	var esriimagery = L.esri.basemapLayer("Imagery", {maxZoom: 17}).addTo(map);
+	
+	var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==");
+	
+	<!-- Call for WMS layers / z-index is related to display ordering : layers with the highest z-index will be displayed first -->   
+	var elev_mm = L.nonTiledLayer.wms('http://localhost:8080/geoserver/angkorlidar/wms', {
+		layers: 'angkorlidar:CambodiaDEM',
+		format:'image/png',
+		transparent: true,
+		tileSize: 1024,
+		opacity: 1,
+		attribution: "CALI / KALC dataset | Via GeoServer",
+		zIndex: 3
+	});
+	
+	var elev_qgis1 = L.nonTiledLayer.wms('http://efeocali.ddns.net/cgi-bin/qgis_mapserv.fcgi.exe?', {
+		layers: 'DEM_CC',
+		format:'image/png',
+		transparent: true,
+		attribution: "CALI / KALC dataset | Via QGIS Server",
+		zIndex: 3
+	});
+	
+	var elev_qgis2 = L.nonTiledLayer.wms('http://efeocali.ddns.net/cgi-bin/qgis_mapserv.fcgi.exe?', {
+		layers: 'DEM_MM',
+		format:'image/png',
+		transparent: true,
+		attribution: "CALI / KALC dataset | Via QGIS Server",
+		zIndex: 3
+	});
+	
+	var elev_qgis3 = L.nonTiledLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?', {
+		layers: 'SuperAngkor',
+		format:'image/png',
+		transparent: true,
+		attribution: "CALI / KALC dataset | Via QGIS Server",
+		zIndex: 3
+	});
+	
+	var elev_qgis4 = L.nonTiledLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?', {
+		layers: 'Vector',
+		format:'image/png',
+		transparent: true,
+		attribution: "CALI / KALC dataset | Via QGIS Server",
+		zIndex: 3
+	});
+	
+	<!-- Creation of a variable called background layers (this is like a layer group in ArcGIS) + Attribution of a name for the layers-->
+	var backgroundLayers = {
+		"Satellite": esriimagery,
+		"Street": streets,
+		"Emerald": retro,
+		"Empty Layer": white
+	};
+	
+	var overlays = {
+		"Elevation": elev_mm,
+		"Siem Reap 1": elev_qgis1,
+		"Siem Reap 2": elev_qgis2,
+		"Montreuil": elev_qgis3,
+		"Map": elev_qgis4
+	};
+	
+	<!-- this line allow to control layers -->
+	L.control.zoom({position: 'topright'}).addTo(map)
+	
+	L.control.layers(backgroundLayers, overlays, {position: 'topright'}).addTo(map);
+	
+	L.control.locate({
+		flyTo: true,
+		position: 'topright',
+		strings: {title: "Location"},
+		icon: 'fas fa-map-marker-alt'
+	}).addTo(map)
+	
+	L.control.scale().addTo(map);
+	
+	var measureControl = L.control.measure({
+		position: 'topright',
+		primaryLengthUnit: 'kilometers',
+		secondaryLengthUnit: 'feet',
+		primaryAreaUnit: 'sqmeters', 
+		secondaryAreaUnit: undefined, 
+		activeColor: '#993366', 
+		completedColor: '#993366'});
+	measureControl.addTo(map);
+	
+	var sidebar = L.control.sidebar('sidebar').addTo(map);
+		
+		$("#sldOpacity1").on('change', function(){
+			$("#image-opacity").html(this.value);
+			elev_mm.setOpacity(this.value);
+		});
+		$("#sldOpacity2").on('change', function(){
+			$("#image-opacity").html(this.value);
+			elev_qgis1.setOpacity(this.value);
+		});
+		$("#sldOpacity3").on('change', function(){
+			$("#image-opacity").html(this.value);
+			elev_qgis2.setOpacity(this.value);
+		});
+		$("#sldOpacity4").on('change', function(){
+			$("#image-opacity").html(this.value);
+			elev_qgis3.setOpacity(this.value);
+		});
+		$("#sldOpacity5").on('change', function(){
+			$("#image-opacity").html(this.value);
+			elev_qgis4.setOpacity(this.value);
+		});	
+	});
+	
+	var image_tracker1 = '0';
+	function change1(){	
+		var image = document.getElementById('pic1');
+		if (image_tracker1=='0'){
+			image.src = 'img/net/DEM_alt.png';
+			image_tracker1 = '1';
+		}
+		else{
+			image.src = 'img/net/DEM.png';
+			image_tracker1 = '0';
+		}
+	}
+	
+	var image_tracker2 = '0';
+	function change2(){	
+		var image = document.getElementById('pic2');
+		if (image_tracker2=='0'){
+			image.src = 'img/net/Hillshade_alt.png';
+			image_tracker2 = '1';
+		}
+		else{
+			image.src = 'img/net/Hillshade.png';
+			image_tracker2 = '0';
+		}
+	}
+
+	var image_tracker3 = '0';
+	function change3(){	
+		var image = document.getElementById('pic3');
+		if (image_tracker3=='0'){
+			image.src = 'img/net/Slope_alt.png';
+			image_tracker3 = '1';
+		}
+		else{
+			image.src = 'img/net/Slope.png';
+			image_tracker3 = '0';
+		}
+	}
+
+	var image_tracker4 = '0';
+	function change4(){	
+		var image = document.getElementById('pic4');
+		if (image_tracker4=='0'){
+			image.src = 'img/net/SVF_alt.png';
+			image_tracker4 = '1';
+		}
+		else{
+			image.src = 'img/net/SVF.png';
+			image_tracker4 = '0';
+		}
+	}
+
+	var image_tracker5 = '0';
+	function change5(){	
+		var image = document.getElementById('pic5');
+		if (image_tracker5=='0'){
+			image.src = 'img/net/LRM_alt.png';
+			image_tracker5 = '1';
+		}
+		else{
+			image.src = 'img/net/LRM.png';
+			image_tracker5 = '0';
+		}
+	}
+
+	var image_tracker6 = '0';
+	function change6(){	
+		var image = document.getElementById('pic6');
+		if (image_tracker6=='0'){
+			image.src = 'img/net/DEM_alt.png';
+			image_tracker6 = '1';
+		}
+		else{
+			image.src = 'img/net/DEM.png';
+			image_tracker6 = '0';
+		}
+	}
+</script>
+</body>
+</html>
