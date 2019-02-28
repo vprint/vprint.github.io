@@ -5,7 +5,7 @@
   cursor: pointer;
 }
 .leaflet-control-locate.active a {
-  color: #2074B6;
+  color: #ac1d28;
 }
 .leaflet-control-locate.active.following a {
   color: #FC8428;
