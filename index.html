@@ -94,22 +94,22 @@
 				Settings
 				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 		
-		<br /><table><tr><td width=15%><img src="img\net\DEM.png" id="pic1" onclick="change1()" width=60px height=60px</td><td width=5%></td><td width=80%><p class="lorem">Elevation</p>
+		<br /><table class="test"><tr><td width=15%><img src="img\net\DEM.jpg" id="pic1" onclick="change1()" width=60px height=60px</td><td width=5%></td><td width=80%><p class="lorem">Elevation</p>
             <input type='range' id='sldOpacity1' min='0' max='1' step='0.001' value='1'></td></tr></table>
 		
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Hillshade.png" id="pic2" onclick="change2()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Hillshade</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Hillshade.jpg" id="pic2" onclick="change2()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Hillshade</p>
             <input type='range' id='sldOpacity2' min='0' max='1' step='0.001' value='1'></td></tr></table>
 			
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Slope.png" id="pic3" onclick="change3()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Slope</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Slope.jpg" id="pic3" onclick="change3()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Slope</p>
             <input type='range' id='sldOpacity3' min='0' max='1' step='0.001' value='1'></td></tr></table>
 			
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\SVF.png" id="pic4" onclick="change4()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Sky-View Factor</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\SVF.jpg" id="pic4" onclick="change4()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Sky-View Factor</p>
             <input type='range' id='sldOpacity4' min='0' max='1' step='0.001' value='1'></td></tr></table>
 		
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\LRM.png" id="pic5" onclick="change5()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Local Relief Model</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\LRM.jpg" id="pic5" onclick="change5()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Local Relief Model</p>
             <input type='range' id='sldOpacity5' min='0' max='1' step='0.001' value='1'></td></tr></table>
 		
-		<br /><br /><table width=100%><tr><td width=28%><img src="img\net\Satellite_alt.png" id="pic6" onclick="change6()" height=60px><p class="alpha">    Satellite</p></td><td width=8%></td><td width=28%><img src="img\net\streets.png" id="pic7" onclick="change7()" height=60px><p class="alpha">     Streets</p></td><td width=8%></td><td width=28%><img src="img\net\emerald.png" id="pic8" onclick="change8()" height=60px><p class="alpha">    Emerald</p></td></tr></table>
+		<br /><br /><table width=100%><tr><td width=28%><img src="img\net\Satellite_alt.jpg" id="pic6" onclick="change6()" height=60px><p class="alpha">    Satellite</p></td><td width=8%></td><td width=28%><img src="img\net\streets.jpg" id="pic7" onclick="change7()" height=60px><p class="alpha">     Streets</p></td><td width=8%></td><td width=28%><img src="img\net\emerald.jpg" id="pic8" onclick="change8()" height=60px><p class="alpha">    Emerald</p></td></tr></table>
 		
 			
             </div>
@@ -313,14 +313,15 @@
 	var image8 = document.getElementById('pic8');
 	
 	var image_tracker1 = '0';
+
 	function change1(){	
 		if (image_tracker1=='0'){
-			image1.src = 'img/net/DEM_alt.png';
+			image1.src = 'img/net/DEM_alt.jpg';
 			image_tracker1 = '1';
 			map.addLayer(DEMLAYER);
 		}
 		else{
-			image1.src = 'img/net/DEM.png';
+			image1.src = 'img/net/DEM.jpg';
 			image_tracker1 = '0';
 			map.removeLayer(DEMLAYER);
 		}
@@ -329,12 +330,12 @@
 	var image_tracker2 = '0';
 	function change2(){	
 		if (image_tracker2=='0'){
-			image2.src = 'img/net/Hillshade_alt.png';
+			image2.src = 'img/net/Hillshade_alt.jpg';
 			image_tracker2 = '1';
 			map.addLayer(HILLSHADE);
 		}
 		else{
-			image2.src = 'img/net/Hillshade.png';
+			image2.src = 'img/net/Hillshade.jpg';
 			image_tracker2 = '0';
 			map.removeLayer(HILLSHADE);
 		}
@@ -343,12 +344,12 @@
 	var image_tracker3 = '0';
 	function change3(){	
 		if (image_tracker3=='0'){
-			image3.src = 'img/net/Slope_alt.png';
+			image3.src = 'img/net/Slope_alt.jpg';
 			image_tracker3 = '1';
 			map.addLayer(SLOPE);
 		}
 		else{
-			image3.src = 'img/net/Slope.png';
+			image3.src = 'img/net/Slope.jpg';
 			image_tracker3 = '0';
 			map.removeLayer(SLOPE);
 		}
@@ -357,12 +358,12 @@
 	var image_tracker4 = '0';
 	function change4(){	
 		if (image_tracker4=='0'){
-			image4.src = 'img/net/SVF_alt.png';
+			image4.src = 'img/net/SVF_alt.jpg';
 			image_tracker4 = '1';
 			map.addLayer(SVFLAYER);
 		}
 		else{
-			image4.src = 'img/net/SVF.png';
+			image4.src = 'img/net/SVF.jpg';
 			image_tracker4 = '0';
 			map.removeLayer(SVFLAYER);
 		}
@@ -372,12 +373,12 @@
 	function change5(){	
 		
 		if (image_tracker5=='0'){
-			image5.src = 'img/net/LRM_alt.png';
+			image5.src = 'img/net/LRM_alt.jpg';
 			image_tracker5 = '1';
 			map.addLayer(LRMLAYER);
 		}
 		else{
-			image5.src = 'img/net/LRM.png';
+			image5.src = 'img/net/LRM.jpg';
 			image_tracker5 = '0';
 			map.removeLayer(LRMLAYER);
 		}
@@ -386,11 +387,11 @@
 	var image_tracker6 = '0';
 	function change6(){	
 		if (image_tracker6=='0'){
-			image6.src = 'img/net/Satellite_alt.png';
+			image6.src = 'img/net/Satellite_alt.jpg';
 			image_tracker6 = '1';
-			image7.src = 'img/net/streets.png';
+			image7.src = 'img/net/streets.jpg';
 			image_tracker7 = '0';
-			image8.src = 'img/net/emerald.png';
+			image8.src = 'img/net/emerald.jpg';
 			image_tracker8 = '0';
 			map.removeLayer(retro);
 			map.removeLayer(streets);
@@ -402,11 +403,11 @@
 	var image_tracker7 = '0';
 	function change7(){	
 		if (image_tracker7=='0'){
-			image6.src = 'img/net/Satellite.png';
+			image6.src = 'img/net/Satellite.jpg';
 			image_tracker6 = '0';
-			image7.src = 'img/net/streets_alt.png';
+			image7.src = 'img/net/streets_alt.jpg';
 			image_tracker7 = '1';
-			image8.src = 'img/net/emerald.png';
+			image8.src = 'img/net/emerald.jpg';
 			image_tracker8 = '0';
 			map.removeLayer(retro);
 			map.removeLayer(esriimagery);
@@ -418,11 +419,11 @@
 	var image_tracker8 = '0';
 	function change8(){	
 		if (image_tracker8=='0'){
-			image6.src = 'img/net/Satellite.png';
+			image6.src = 'img/net/Satellite.jpg';
 			image_tracker6 = '0';
-			image7.src = 'img/net/streets.png';
+			image7.src = 'img/net/streets.jpg';
 			image_tracker7 = '0';
-			image8.src = 'img/net/emerald_alt.png';
+			image8.src = 'img/net/emerald_alt.jpg';
 			image_tracker8 = '1';
 			map.removeLayer(esriimagery);
 			map.removeLayer(streets);
