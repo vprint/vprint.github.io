@@ -6,12 +6,14 @@
   overflow: hidden;
   z-index: 2000; }
   .sidebar.collapsed {
-    width: 40px;}
+    width: 42px;
+    height: 240px;}
   @media (min-width: 768px) {
     .sidebar {
       top: 10px;
       bottom: 10px;
-      transition: width 1000ms;} }
+      transition: width 1000ms;
+      transition: height 1000ms} }
   @media (min-width: 768px) and (max-width: 991px) {
     .sidebar {
       width: 305px; } }
@@ -63,9 +65,10 @@ background-color: rgba(249, 246, 237, 1)}
         color: #fff;
         background-color: #AC1D28; }
       .sidebar-tabs > li.disabled, .sidebar-tabs > ul > li.disabled {
-        color: rgba(172, 29, 40, 0.4); }
+        color: color: #333; }
         .sidebar-tabs > li.disabled:hover, .sidebar-tabs > ul > li.disabled:hover {
-          background: transparent; }
+            color: #fff;
+            background-color: rgba(172, 29, 40, 0.9) }
         .sidebar-tabs > li.disabled > a, .sidebar-tabs > ul > li.disabled > a {
           cursor: default; }
       .sidebar-tabs > li > a, .sidebar-tabs > ul > li > a {
