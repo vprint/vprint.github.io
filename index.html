@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Archaeolidar</title>
+	<title>testsite</title>
 	
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 	
+	<link rel="stylesheet" href="src/leaflet.css"/>
 	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
 	<link rel="stylesheet" href="src/css/bootstrap.css"/>
-	<link rel="stylesheet" href="src/leaflet.css"/>
 	<link rel="stylesheet" href="src/css/archaeolidar.css" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<link rel="stylesheet" href="src/plugins/leaflet-locatecontrol-gh-pages/dist/L.Control.Locate.min.css" />
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.css" rel='stylesheet'/>
 	<link href="https://fonts.googleapis.com/css?family=Merriweather|Titillium+Web" rel="stylesheet">
+	<link href="https://aprilandjan.github.io/leaflet.measure/leaflet.measure.css" rel="stylesheet">
 
 	
 	<!-- Load Leaflet from CDN -->
@@ -22,10 +23,11 @@
 	<!-- Load Esri Leaflet from CDN (usefull to display free satellites tiles -->
 	<script src="src/plugins/esri-leaflet-v2.2.3/dist/esri-leaflet.js"></script>
 	<script src="src/plugins/leaflet-hash-master/leaflet-hash.js"></script>
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.js"></script>
 	<script src="src/jquery-3.3.1.min.js"></script>
+	<!-- Single tile WMS provide better performances, so we need to use this plugin -->
 	<script src="src/plugins/Leaflet.NonTiledLayer/NonTiledLayer.js"></script>
 	<script src="src/plugins/sidebar-v2-master/js/leaflet-sidebar.js"></script>
+	<script src="https://aprilandjan.github.io/leaflet.measure/leaflet.measure.js"></script>
 	
 <style>
 	body {
@@ -62,13 +64,31 @@
 		-moz-border-radius:50px;
 		border-radius:50px;
 	}
-	
 
-	
+	.button1 {
+		background-color: #D3D3D3;
+		border: none;
+		color: black;
+		width: 100%;
+		padding: 10px;
+		text-decoration: none;
+		display: inline-block;
+	}
+	.button1:hover {
+		background-color: #ac1d29;
+		border: none;
+		color: white;
+		width: 100%;
+		padding: 10px;
+		text-decoration: none;
+		display: inline-block;
+	}
+
 </style>
 </head>
 
 <body>
+	<!--Left panel-->
 	<div id="sidebar" class="sidebar collapsed">
 	<!--Nav tabs-->
         <div class="sidebar-tabs">
@@ -78,6 +98,8 @@
 				<li><a href="#Information" role="tab"><i class="fas fa-info-circle"></i></a></li>
 				<br />
 				<br />
+				<li class="disabled"><a href="#ruler" role="tab"><i class="fas fa-ruler-horizontal"></i></a></li>
+				<li class="disabled"><a href="#locate" role="tab" onclick="LocateMe()"><i class="fas fa-map-marker-alt"></i></a></li>
 				<li class="disabled"><a href="#zoomin" role="tab" onclick="zoomin()"><i class="far fa-plus-square"></i></a></li>
 				<li class="disabled"><a href="#zoomout" role="tab" onclick="zoomout()"><i class="far fa-minus-square"></i></a></li>
             </ul>
@@ -87,12 +109,12 @@
         <div class="sidebar-content">
             <div class="sidebar-pane" id="home">
                 <h1 class="sidebar-header">
-                    Archaeolidar.net
+                    AlTest.net
                     <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
                 </h1>
 
-                <p class="lorem"><br />The Cambodian Archaeological Lidar Initiative is the latest instalment in a tradition of archaeological mapping in Cambodia dating back nearly a century and a half to the first French expeditions. The lineage of the current project can be traced directly back to the successful nomination of Angkor as a World Heritage Site in 1992, which involved archaeologists including Christophe Pottier of the École française d’Extrême-Orient (EFEO) preparing landscape-scale maps of the urban fabric of Angkor that stretched between and far beyond the temples. Even though the cities were made of wood, traces could still clearly be seen in the topography of the landscape, in the form of ponds, occupation mounds, canals, reservoirs, roadways, neighbourhood temples, and even field patterns that had persisted intact on the surface for a millennium or more.<br/><br/><img src="img/Figure_4.jpg" height="95%" width="95%"></img>
-				<br /><br /><p class="ipsum">Patterned topography including ponds in the vicinity of Banteay Samre temple</p><br /><p class="lorem">During the 1990s Christophe Pottier completed a very detailed topographic map of the central and southern areas of Greater Angkor, and from 1998 joined Roland Fletcher of the University of Sydney and colleagues from the APSARA National Authority in creating the Greater Angkor Project (GAP). One of the core objectives of GAP was to map the extended urban landscape of Angkor in order to evaluate various theories about the decline of Angkor as the centre of gravity of Khmer power in the 14th to 15th centuries, in particular the role of the water management system in the failure of the urban network. This required a detailed understanding of the archaeological landscape over a very wide scale of time and space, and during the 1990s various remote sensing projects – focusing in particular on radar imaging technology – were launched with a view to further elaborating Christophe Pottier’s map in the extended northern, eastern and southern reaches of the Greater Angkor Area. The most fruitful of these projects was a radar acquisition conducted in 2000 by NASA for GAP over an extended area from the Tonle Sap to the Phnom Kulen range, which formed the basis for many years of ongoing mapping work and culminated in the publication of a new map of Angkor in 2007 incorporating the work of Christophe Pottier and Damian Evans, who combined the radar and various other image sources to extend and complete a map of Greater Angkor. Meanwhile, members of GAP and other teams lunched similar mapping projects at regional centres of the Khmer such as Banteay Chhmar and Koh Ker.<br /><img src="img/Figure_1.jpg" height="95%" width="95%"><p class="ipsum">Map of Greater Angkor published in 2007 based on the PhD theses of Christophe Pottier (1999) and Damian Evans (2007)</p><br /><p class="lorem">The greatest deficiency of all of these maps was the inability of conventional sensors, including radar, to ‘see through’ the dense vegetation that often covered the zones of archaeological interest. Airborne laser scanning or ‘lidar’ technology had been on our horizon for many years as a potential solution to this problem, but the technology was expensive, and until recently was not sufficiently advanced for our purposes. Inspired by the high-profile success of lidar at the Mayan site of Caracol in Belize in 2009, members of GAP used seed money from the National Geographic to grow a consortium of eight international teams (the Khmer Archaeology LiDAR Consortium or KALC) in order to carry out the first application of lidar for archaeology anywhere in Asia. This was completed over Angkor, Phnom Kulen and Koh Ker in 2012, and the successful results of that mission were the basis for an award by the European Research Council of 1.5 million Euros to the EFEO for a second, greatly-expanded lidar campaign in 2015.</p>
+                <p class="lorem"><br />Presentation text came here.<br/><br/>
+				<br /><br /><p class="ipsum">Some text</p><br /><p class="lorem">Some other text.<br />with more text. Demo blalbla</p><br /><p class="lorem">And again, some text.</p>
             </div>
             
 			<div class="sidebar-pane" id="settings">
@@ -100,184 +122,110 @@
 				Settings
 				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 		
-		<br /><table class="test"><tr><td width=15%><img class="notroundedImage" src="img\net\DEM.jpg" id="pic1" onclick="change1()" width=60px height=60px</td><td width=5%></td><td width=80%><p class="lorem">Elevation</p>
+		<br /><table class="test"><tr><td width=15%><img class="notroundedImage" src="img\net\DEM.jpg" id="pic1" onclick="change1()" width=60px height=60px</td><td width=5%></td><td width=80%><p class="lorem">A layer</p>
             <input type='range' id='sldOpacity1' min='0' max='1' step='0.001' value='1'></td></tr></table>
 		
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Hillshade.jpg" id="pic2" onclick="change2()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Hillshade</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Hillshade.jpg" id="pic2" onclick="change2()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Another one</p>
             <input type='range' id='sldOpacity2' min='0' max='1' step='0.001' value='1'></td></tr></table>
 			
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Slope.jpg" id="pic3" onclick="change3()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Slope</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\Slope.jpg" id="pic3" onclick="change3()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Layer</p>
             <input type='range' id='sldOpacity3' min='0' max='1' step='0.001' value='1'></td></tr></table>
 			
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\SVF.jpg" id="pic4" onclick="change4()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Sky-View Factor</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\SVF.jpg" id="pic4" onclick="change4()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">more layer</p>
             <input type='range' id='sldOpacity4' min='0' max='1' step='0.001' value='1'></td></tr></table>
 		
-		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\LRM.jpg" id="pic5" onclick="change5()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">Local Relief Model</p>
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\LRM.jpg" id="pic5" onclick="change5()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">another one</p>
             <input type='range' id='sldOpacity5' min='0' max='1' step='0.001' value='1'></td></tr></table>
+			
+		<br /><br /><table><tr><td width=15%><img class="notroundedImage" src="img\net\vectormaps_rond.png" id="pic9" onclick="change9()" width=60px height=60px></td><td width=5%></td><td width=80%><p class="lorem">and again</p>
+            <input type='range' id='sldOpacity6' min='0' max='1' step='0.001' value='1'></td></tr></table>
 		
 		<br /><br /><table width=100%><tr><td width=28%><img src="img\net\Satellite_alt.png" id="pic6" onclick="change6()" height=60px><p class="alpha">    Satellite</p></td><td width=8%></td><td width=28%><img src="img\net\streets.png" id="pic7" onclick="change7()" height=60px><p class="alpha">     Streets</p></td><td width=8%></td><td width=28%><img src="img\net\emerald.png" id="pic8" onclick="change8()" height=60px><p class="alpha">    Emerald</p></td></tr></table>
 		
+		<br /><br /><table width=100%><tr><td width=28%></td><td width=8%></td><td width=28%><img src="img\net\Empty-01.png" id="pic10" onclick="change10()" height=60px><p class="alpha">    Empty</p></td><td width=8%></td><td width=28%></td></tr></table>
 			
             </div>
 			
-			<div class="sidebar-pane" id="Information">
-                <h1 class="sidebar-header">Information
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+		<div class="sidebar-pane" id="Information">
+            <h1 class="sidebar-header">Information
+			<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 		<br />
-		<p class="lorem">Map Legend :</p>
+
+	<button class="button1" onclick="ElevationLgdFunction()"><p class="lorem">Elevation Legend</p></button>
+	
+	<div id="ElevDiv" style="display:none">
 		<br />
-		<table>
-			<tr>
-				<td><p class="lorem"><img src="legend/PreahKhan_polygone_0_CanalWater0.png" width=100% height=100%/></td><td><p class="lorem">  Canal (Water)</p></td>
-			</tr>
-			<tr>
-				<td><p class="lorem"><img src="legend/PreahKhan_polygone_0_Causeway1.png" width=100% height=100%/></td><td><p class="lorem">  Causeway</p></td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Embankment2.png" /></td><td style="text-align: left;"><p class="lorem">  Embankment</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_MasonryCut3.png" /></td><td style="text-align: left;"><p class="lorem">  Masonry (Cut)</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Moat4.png" /></td><td style="text-align: left;"><p class="lorem">  Moat</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Mound5.png" /></td><td style="text-align: left;"><p class="lorem">  Mound</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_NotYetAssigned6.png" /></td><td style="text-align: left;"><p class="lorem">  Not Yet Assigned</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Pond7.png" /></td><td style="text-align: left;"><p class="lorem">  Pond</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_PondBanks8.png" /></td><td style="text-align: left;"><p class="lorem">  Pond Banks</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_SignificantMound9.png" /></td><td style="text-align: left;"><p class="lorem">  Significant Mound</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Temple10.png" /></td><td style="text-align: left;"><p class="lorem">  Temple</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Unknown11.png" /></td><td style="text-align: left;"><p class="lorem">  Unknown</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Watercourse12.png" /></td><td style="text-align: left;"><p class="lorem">  Watercourse</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Quarry13.png" /></td><td style="text-align: left;"><p class="lorem">  Quarry</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_CircularSite14.png" /></td><td style="text-align: left;"><p class="lorem">  Circular Site</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_EarthernPlatform15.png" /></td><td style="text-align: left;"><p class="lorem">  Earthern Platform</td>
-			</tr>
-			<tr>
-				<td style="text-align: left;"><img src="legend/PreahKhan_polygone_0_Flooded16.png" /></td><td style="text-align: left;"><p class="lorem">  Flooded</td>
-			</tr>
-		</table>
-        </div>
-		<div class="button" id="zoomin"></div>
+			<table>
+				<tr>
+					<td><p class="lorem">Une légende pour bien comprendre</p>
+					</td>
+				</tr>
+			</table>
+	</div>
+
+</br></br> 
+
+	<button class="button1" style="width: 100%;" onclick="SVFLgdFunction()"><p class="lorem">Sky-View Factor Legend</p></button>
+
+	<div id="SVFDiv" style="display:none">
+		<br />
+			<table>
+				<tr>
+					<td><p class="lorem">Une légende pour bien comprendre</p>
+					</td>
+				</tr>
+			</table>
+	</div>
+
+</br></br> 
+	
+	<!-- Button for map legend -->
+	<button class="button1" onclick="MapLgdFunction()"><p class="lorem">Map Legend</p></button>
+
+	<div id="LegendDiv" style="display:none">
+		<br />
+	</div>
 		</div>
-		<div class="button" id="zoomout"></div>
         </div>
     </div>
 	
 	<!--Needed to display the map-->
-	<div id="map" class="sidebar-map"></div>
-	
-	<script src="src\plugins\mapbox-gl-leaflet-master\leaflet-mapbox-gl.js"></script>
-
-	
+	<div id="map" style="width: 100%; height:100%;" class="sidebar-map"></div>
+		
 <script type="text/javascript">
 	<!-- Creation of the map -->
 
-	var map = L.map('map',{zoomControl: false, minZoom:5, maxZoom: 19, inertiaDeceleration: 2000, wheelPxPerZoomLevel: 80, zoomDelta: 1, crs: L.CRS.EPSG3857}).setView([13.441288, 103.859064], 14);
+	var map = L.map('map',{zoomControl: false, minZoom:5, maxZoom: 19, inertiaDeceleration: 5000, wheelPxPerZoomLevel: 80, zoomDelta: 1, crs: L.CRS.EPSG3857}).setView([13.441288, 103.859064], 14);
 
+	<!-- Hash allow to display coordinates on the URL -->
 	var hash = new L.Hash(map);
 	
 	<!--backgrounds layers (i.e Esri Imagery and Esri Streets)-->
-	var streets = L.mapboxGL({
-		attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-		accessToken: 'pk.eyJ1IjoidnByaW50OTIiLCJhIjoiY2pnZDVoYXMyMDBpMjMzcWdxNmJkajYydSJ9.CWVQEeqtv8yTNAClH-63cw',
-		style: 'mapbox://styles/mapbox/streets-v9',
-		zIndex: 2
-	});
+	var esriimagery = L.esri.basemapLayer("Imagery", {zIndex: 1, maxNativeZoom: 17}).addTo(map);
 
-	var retro = L.mapboxGL({
-		attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-		accessToken: 'pk.eyJ1IjoidnByaW50OTIiLCJhIjoiY2pnZDVoYXMyMDBpMjMzcWdxNmJkajYydSJ9.CWVQEeqtv8yTNAClH-63cw',
-		style: 'mapbox://styles/mapbox/emerald-v8',
-		zIndex: 2
-	});
-	
-	var esriimagery = L.esri.basemapLayer("Imagery", {zIndex: 2, maxNativeZoom: 17}).addTo(map);
-	
-	var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==");
 	
 	<!-- Call for WMS layers / z-index is related to display ordering : layers with the highest z-index will be displayed first -->   
-	var HILLSHADE = L.nonTiledLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?', {
-		layers: 'Hillshade',
-		format:'image/png',
-		transparent: true,
-		attribution: "CALI / KALC dataset | Via GeoServer",
-		zIndex: 1
-	});
-	
-	var SVFLAYER = L.nonTiledLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?', {
-		layers: 'SVF',
-		format:'image/png',
-		transparent: true,
-		attribution: "CALI / KALC dataset | Via QGIS Server"
-	});
-	
-	var LRMLAYER = L.nonTiledLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?', {
-		layers: 'LRM',
-		format:'image/png',
-		transparent: true,
-		attribution: "CALI / KALC dataset | Via QGIS Server",
-		zIndex: 1
-	});
-	
-	var DEMLAYER = L.nonTiledLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?', {
-		layers: 'DEM',
-		format:'image/png',
-		transparent: true,
-		attribution: "CALI / KALC dataset | Via QGIS Server",
-		zIndex: 1
-	});
-	
-	var SLOPE = L.nonTiledLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?', {
-		layers: 'Slope',
-		format:'image/png',
-		transparent: true,
-		attribution: "CALI / KALC dataset | Via QGIS Server",
-		zIndex: 1
-	});
-	
-	<!-- Creation of a variable called background layers (this is like a layer group in ArcGIS) + Attribution of a name for the layers-->
-	var backgroundLayers = {
-		"Satellite": esriimagery,
-		"Street": streets,
-		"Emerald": retro,
-		"Empty Layer": white
-	};
-	
-	var overlays = {
-		"Elevation": HILLSHADE,
-		"Siem Reap 1": SVFLAYER,
-		"Siem Reap 2": LRMLAYER,
-		"Montreuil": DEMLAYER,
-		"Map": SLOPE
-	};
-	
-	<!-- this line allow to control layers -->
-	
 
-	L.control.scale().addTo(map);
+	
+	var streets = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidnByaW50OTIiLCJhIjoiY2pnZDVoYXMyMDBpMjMzcWdxNmJkajYydSJ9.CWVQEeqtv8yTNAClH-63cw', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery Â© <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.streets'
+        });
+
+	var retro = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidnByaW50OTIiLCJhIjoiY2pnZDVoYXMyMDBpMjMzcWdxNmJkajYydSJ9.CWVQEeqtv8yTNAClH-63cw', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery Â© <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.emerald'
+        });
+	
+	<!-- Empty layer -->
+	var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==");
+
+
+	<!-- Panel Controls -->
 	
 	var sidebar = L.control.sidebar('sidebar').addTo(map);
 	
@@ -288,6 +236,7 @@
 		map.zoomOut(1)
 	}
 	
+	<!-- Adding location function -->
 	L.control.locate({
 		flyTo: true,
 		position: 'topright',
@@ -296,7 +245,13 @@
 		showCompass: true
 	}).addTo(map)
 	
+	
+	<!-- Function for opacity -->
 	$(document).ready(function(){	
+		$("#sldOpacity6").on('change', function(){
+			$("#image-opacity").html(this.value);
+			VECTORLAYERS.setOpacity(this.value);
+		});
 		$("#sldOpacity1").on('change', function(){
 			$("#image-opacity").html(this.value);
 			DEMLAYER.setOpacity(this.value);
@@ -327,7 +282,10 @@
 	var image6 = document.getElementById('pic6');
 	var image7 = document.getElementById('pic7');
 	var image8 = document.getElementById('pic8');
+	var image9 = document.getElementById('pic9');
+	var image10 = document.getElementById('pic10');
 	
+	<!-- Image switcher for layers selection -->
 	var image_tracker1 = '0';
 	function change1(){	
 		if (image_tracker1=='0'){
@@ -391,6 +349,7 @@
 			image5.src = 'img/net/LRM_alt.jpg';
 			image_tracker5 = '1';
 			map.addLayer(LRMLAYER);
+			LRMLAYER.bringToBack();
 		}
 		else{
 			image5.src = 'img/net/LRM.jpg';
@@ -408,6 +367,8 @@
 			image_tracker7 = '0';
 			image8.src = 'img/net/emerald.png';
 			image_tracker8 = '0';
+			image10.src = 'img/net/Empty-01.png';
+			image_tracker10 = '0';
 			map.removeLayer(retro);
 			map.removeLayer(streets);
 			map.removeLayer(white);
@@ -424,6 +385,8 @@
 			image_tracker7 = '1';
 			image8.src = 'img/net/emerald.png';
 			image_tracker8 = '0';
+			image10.src = 'img/net/Empty-01.png';
+			image_tracker10 = '0';
 			map.removeLayer(retro);
 			map.removeLayer(esriimagery);
 			map.removeLayer(white);
@@ -440,13 +403,83 @@
 			image_tracker7 = '0';
 			image8.src = 'img/net/emerald_alt.png';
 			image_tracker8 = '1';
+			image10.src = 'img/net/Empty-01.png';
+			image_tracker10 = '0';
 			map.removeLayer(esriimagery);
 			map.removeLayer(streets);
 			map.removeLayer(white);
 			map.addLayer(retro);
 		}
 	}
+	
+	var image_tracker10 = '0';
+	function change10(){	
+		if (image_tracker10=='0'){
+			image6.src = 'img/net/Satellite.png';
+			image_tracker6 = '0';
+			image7.src = 'img/net/streets.png';
+			image_tracker7 = '0';
+			image8.src = 'img/net/emerald.png';
+			image_tracker8 = '0';
+			image10.src = 'img/net/Empty_alt-01.png';
+			image_tracker10 = '1';
+			map.removeLayer(esriimagery);
+			map.removeLayer(streets);
+			map.removeLayer(retro);
+			map.addLayer(white);
+		}
+	}
 		
+	var image_tracker9 = '0';
+	function change9(){	
+		
+		if (image_tracker9=='0'){
+			image9.src = 'img/net/vectormaps_alt_rond.png';
+			image_tracker9 = '1';
+			map.addLayer(VECTORLAYERS);
+		}
+		else{
+			image9.src = 'img/net/vectormaps_rond.png';
+			image_tracker9 = '0';
+			map.removeLayer(VECTORLAYERS);
+		}
+	}
+
+	<!-- Hide / Show legend -->
+
+	function ElevationLgdFunction() {
+		var x = document.getElementById("ElevDiv");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} else {
+			x.style.display = "none";
+		}
+	} 	
+
+	function MapLgdFunction() {
+		var x = document.getElementById("LegendDiv");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} else {
+			x.style.display = "none";
+		}
+	}
+
+	function SVFLgdFunction() {
+		var x = document.getElementById("SVFDiv");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} else {
+			x.style.display = "none";
+		}
+	}
+	
+	var myIcon = L.icon({
+		iconUrl: 'img/net/circle-solid.svg',
+		iconSize: [13, 13],
+	});
+
+	L.control.scale().addTo(map);
 </script>
 </body>
 </html>
