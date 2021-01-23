@@ -1,0 +1,12 @@
+Réalisé
+
+Ajout des fonds de plan Jawg Maps raster
+Essai du plugin Mapbox-gl-leaflet avec les tuiles Jawg --> problème CORS
+Essai plugin Mapbox avec les tuiles mapbox --> problème de canvas toujours présent
+	Abandon essai vecteurs
+Ajout des infobulles
+Ajout de la détéction écran rétina ("@2x" à la fin des coordonnées des tuiles)
+
+A faire
+Réorganiser la légende (2 div dans 1 div (1 boutton + 1 texte inclus dans 1 div)).
+Explorer des améliorations pour la gestion des layers (possibilité de faire une fonction ?)

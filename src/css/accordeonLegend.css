@@ -1,0 +1,36 @@
+	.accordionLegend {
+		background-color: rgba(249, 246, 237, 1);
+		color: black;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		text-align: left;
+		border: 2px solid #ac1d29;
+		outline: none;
+		transition: 0.4s;
+		font-family: 'Garamond', serif;
+	}
+	
+	.activealt, .accordionLegend:hover {
+		background-color: rgba(172, 29, 40, 0.1);
+	}
+	
+	.panel {
+		padding: 0 18px;
+		background-color: rgba(249, 246, 237, 1);
+		max-height: 0;
+		overflow: hidden;
+	}
+	
+	.accordionLegend:after {
+		content: "\002B";
+		color: black;
+		font-weight: bold;
+		float: right;
+		margin-left: 5px;
+	}
+	
+	.activealt:after {
+		content: "\2212";
+		
+	}
